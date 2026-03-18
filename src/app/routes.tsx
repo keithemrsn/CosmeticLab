@@ -24,4 +24,6 @@ export const router = createBrowserRouter([
       { path: "checkout", Component: Checkout },
     ],
   },
-]);
+], {
+  basename: import.meta.env.BASE_URL,
+});
