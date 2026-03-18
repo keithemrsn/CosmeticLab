@@ -1,6 +1,10 @@
 
 # CosmeticLab Frontend
 
+## Author
+
+Keirna
+
 This project is a Vite + React frontend prepared for:
 
 - Frontend hosting on a static host/CDN
