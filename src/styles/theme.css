@@ -2,25 +2,27 @@
 
 :root {
   --font-size: 16px;
-  --background: #ffffff;
-  --foreground: oklch(0.145 0 0);
+  --font-sans: 'Manrope', 'Segoe UI', sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --background: #fbf6f2;
+  --foreground: #211a17;
   --card: #ffffff;
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: #030213;
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.95 0.0058 264.53);
-  --secondary-foreground: #030213;
-  --muted: #ececf0;
-  --muted-foreground: #717182;
-  --accent: #e9ebef;
-  --accent-foreground: #030213;
+  --card-foreground: #211a17;
+  --popover: #ffffff;
+  --popover-foreground: #211a17;
+  --primary: #3b2e2a;
+  --primary-foreground: #fffdf9;
+  --secondary: #f1e8e1;
+  --secondary-foreground: #2a211d;
+  --muted: #efe6de;
+  --muted-foreground: #6f6157;
+  --accent: #e8ddd2;
+  --accent-foreground: #2a211d;
   --destructive: #d4183d;
   --destructive-foreground: #ffffff;
-  --border: rgba(0, 0, 0, 0.1);
+  --border: rgba(58, 41, 31, 0.14);
   --input: transparent;
-  --input-background: #f3f3f5;
+  --input-background: #f7efe8;
   --switch-background: #cbced4;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
@@ -126,6 +128,11 @@
 
   body {
     @apply bg-background text-foreground;
+    background-image:
+      radial-gradient(circle at 10% 15%, rgba(212, 187, 167, 0.18), transparent 28%),
+      radial-gradient(circle at 85% 8%, rgba(196, 165, 142, 0.14), transparent 24%),
+      linear-gradient(180deg, #fbf6f2 0%, #f7f0ea 100%);
+    font-family: var(--font-sans);
   }
 
   /**
@@ -139,20 +146,25 @@
 
   h1 {
     font-size: var(--text-2xl);
-    font-weight: var(--font-weight-medium);
+    font-weight: 600;
     line-height: 1.5;
+    font-family: var(--font-serif);
+    letter-spacing: 0.015em;
   }
 
   h2 {
     font-size: var(--text-xl);
-    font-weight: var(--font-weight-medium);
+    font-weight: 600;
     line-height: 1.5;
+    font-family: var(--font-serif);
+    letter-spacing: 0.015em;
   }
 
   h3 {
     font-size: var(--text-lg);
     font-weight: var(--font-weight-medium);
     line-height: 1.5;
+    font-family: var(--font-sans);
   }
 
   h4 {
@@ -177,5 +189,16 @@
     font-size: var(--text-base);
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
+  }
+}
+
+@layer components {
+  .ui-kicker {
+    @apply text-xs uppercase text-muted-foreground;
+    letter-spacing: 0.16em;
+  }
+
+  .ui-section-title {
+    @apply text-4xl md:text-5xl leading-tight;
   }
 }

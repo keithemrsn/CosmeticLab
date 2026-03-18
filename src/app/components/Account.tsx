@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 import { motion } from 'motion/react';
 import { User, ShoppingBag, Heart, Settings, LogOut, Package } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -10,8 +10,7 @@ export function Account() {
   const navigate = useNavigate();
 
   if (!isAuthenticated) {
-    navigate('/login');
-    return null;
+    return <Navigate to="/login" replace />;
   }
 
   const handleLogout = () => {
@@ -45,18 +44,19 @@ export function Account() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="bg-secondary border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="border-b border-border bg-secondary/70">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-14">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-4"
           >
-            <div className="w-16 h-16 bg-foreground text-background rounded-full flex items-center justify-center">
+            <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center">
               <User className="w-8 h-8" />
             </div>
             <div>
-              <h1 className="mb-1" style={{ fontSize: '2.5rem' }}>
+              <p className="ui-kicker mb-1">My Account</p>
+              <h1 className="mb-1 text-4xl md:text-5xl leading-none">
                 {user?.name}
               </h1>
               <p className="text-muted-foreground">{user?.email}</p>
@@ -70,10 +70,10 @@ export function Account() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-2xl p-6 border border-border"
+            className="bg-white rounded-3xl p-6 border border-border/80"
           >
             <div className="flex items-center gap-4 mb-2">
-              <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center">
+              <div className="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center">
                 <ShoppingBag className="w-6 h-6" />
               </div>
               <div>
@@ -87,10 +87,10 @@ export function Account() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-white rounded-2xl p-6 border border-border"
+            className="bg-white rounded-3xl p-6 border border-border/80"
           >
             <div className="flex items-center gap-4 mb-2">
-              <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center">
+              <div className="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center">
                 <Package className="w-6 h-6" />
               </div>
               <div>
@@ -104,10 +104,10 @@ export function Account() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white rounded-2xl p-6 border border-border"
+            className="bg-white rounded-3xl p-6 border border-border/80"
           >
             <div className="flex items-center gap-4 mb-2">
-              <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center">
+              <div className="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center">
                 <Heart className="w-6 h-6" />
               </div>
               <div>
@@ -121,10 +121,10 @@ export function Account() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-white rounded-2xl p-6 border border-border"
+            className="bg-white rounded-3xl p-6 border border-border/80"
           >
             <div className="flex items-center gap-4 mb-2">
-              <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center">
+              <div className="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center">
                 <Settings className="w-6 h-6" />
               </div>
               <div>
@@ -137,7 +137,7 @@ export function Account() {
 
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
-            <h2 className="mb-6">Order History</h2>
+            <h2 className="mb-6 text-3xl md:text-4xl">Order History</h2>
             <div className="space-y-4">
               {orderHistory.map((order, index) => (
                 <motion.div
@@ -145,7 +145,7 @@ export function Account() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-white rounded-2xl p-6 border border-border"
+                  className="bg-white rounded-3xl p-6 border border-border/80"
                 >
                   <div className="flex justify-between items-start mb-4">
                     <div>
@@ -158,7 +158,7 @@ export function Account() {
                         })}
                       </p>
                     </div>
-                    <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs">
+                    <span className="bg-[#dde8db] text-[#2f5530] px-3 py-1 rounded-full text-xs">
                       {order.status}
                     </span>
                   </div>
@@ -174,23 +174,23 @@ export function Account() {
           </div>
 
           <div className="md:col-span-1">
-            <h2 className="mb-6">Account Settings</h2>
+            <h2 className="mb-6 text-3xl md:text-4xl">Settings</h2>
             <div className="space-y-3">
-              <button className="w-full flex items-center gap-3 bg-white p-4 rounded-xl border border-border hover:bg-accent transition-colors text-left">
+              <button className="w-full flex items-center gap-3 bg-white p-4 rounded-2xl border border-border/80 hover:bg-accent transition-colors text-left">
                 <User className="w-5 h-5" />
                 <span>Edit Profile</span>
               </button>
-              <button className="w-full flex items-center gap-3 bg-white p-4 rounded-xl border border-border hover:bg-accent transition-colors text-left">
+              <button className="w-full flex items-center gap-3 bg-white p-4 rounded-2xl border border-border/80 hover:bg-accent transition-colors text-left">
                 <Settings className="w-5 h-5" />
                 <span>Preferences</span>
               </button>
-              <button className="w-full flex items-center gap-3 bg-white p-4 rounded-xl border border-border hover:bg-accent transition-colors text-left">
+              <button className="w-full flex items-center gap-3 bg-white p-4 rounded-2xl border border-border/80 hover:bg-accent transition-colors text-left">
                 <Heart className="w-5 h-5" />
                 <span>Wishlist</span>
               </button>
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center gap-3 bg-white p-4 rounded-xl border border-border hover:bg-destructive/10 hover:text-destructive transition-colors text-left"
+                className="w-full flex items-center gap-3 bg-white p-4 rounded-2xl border border-border/80 hover:bg-destructive/10 hover:text-destructive transition-colors text-left"
               >
                 <LogOut className="w-5 h-5" />
                 <span>Sign Out</span>

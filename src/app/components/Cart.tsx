@@ -14,7 +14,7 @@ export function Cart() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center max-w-md mx-auto px-4"
         >
-          <div className="w-24 h-24 bg-secondary rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-24 h-24 bg-white/70 border border-border rounded-full flex items-center justify-center mx-auto mb-6">
             <ShoppingBag className="w-12 h-12 text-muted-foreground" />
           </div>
           <h2 className="mb-4">Your cart is empty</h2>
@@ -23,7 +23,7 @@ export function Cart() {
           </p>
           <Link
             to="/products"
-            className="inline-flex items-center gap-2 bg-foreground text-background px-8 py-4 rounded-full hover:bg-foreground/90 transition-all"
+            className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-full hover:opacity-90 transition-opacity"
           >
             Start Shopping
             <ArrowRight className="w-4 h-4" />
@@ -39,10 +39,9 @@ export function Cart() {
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-          style={{ fontSize: '3rem' }}
+          className="mb-8 text-5xl md:text-6xl"
         >
-          Shopping Cart ({cartCount})
+          Shopping Bag ({cartCount})
         </motion.h1>
 
         <div className="grid lg:grid-cols-3 gap-8">
@@ -55,10 +54,10 @@ export function Cart() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, x: -100 }}
-                  className="bg-white rounded-2xl p-6 border border-border"
+                  className="bg-white rounded-3xl p-6 border border-border/80"
                 >
                   <div className="flex gap-6">
-                    <div className="w-32 h-32 flex-shrink-0 rounded-lg overflow-hidden bg-secondary">
+                    <div className="w-28 h-28 md:w-32 md:h-32 flex-shrink-0 rounded-2xl overflow-hidden bg-secondary">
                       <img
                         src={item.image}
                         alt={item.name}
@@ -77,7 +76,7 @@ export function Cart() {
                         <motion.button
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
-                          onClick={() => removeFromCart(item.id)}
+                          onClick={() => removeFromCart(item.id, item.shade)}
                           className="text-muted-foreground hover:text-destructive transition-colors"
                         >
                           <Trash2 className="w-5 h-5" />
@@ -88,16 +87,16 @@ export function Cart() {
                         <div className="flex items-center gap-3">
                           <motion.button
                             whileTap={{ scale: 0.9 }}
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="w-8 h-8 rounded-full border border-border hover:border-foreground transition-colors flex items-center justify-center"
+                            onClick={() => updateQuantity(item.id, item.quantity - 1, item.shade)}
+                            className="w-8 h-8 rounded-full border border-border hover:bg-accent transition-colors flex items-center justify-center"
                           >
                             <Minus className="w-4 h-4" />
                           </motion.button>
                           <span className="w-8 text-center">{item.quantity}</span>
                           <motion.button
                             whileTap={{ scale: 0.9 }}
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="w-8 h-8 rounded-full border border-border hover:border-foreground transition-colors flex items-center justify-center"
+                            onClick={() => updateQuantity(item.id, item.quantity + 1, item.shade)}
+                            className="w-8 h-8 rounded-full border border-border hover:bg-accent transition-colors flex items-center justify-center"
                           >
                             <Plus className="w-4 h-4" />
                           </motion.button>
@@ -117,9 +116,9 @@ export function Cart() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-2xl p-6 border border-border sticky top-24"
+              className="bg-white rounded-3xl p-6 border border-border/80 sticky top-28"
             >
-              <h3 className="mb-6">Order Summary</h3>
+              <h3 className="ui-kicker mb-6">Order Summary</h3>
 
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between text-sm">
@@ -145,7 +144,7 @@ export function Cart() {
               </div>
 
               {cartTotal < 50 && (
-                <div className="bg-secondary p-4 rounded-lg mb-6 text-sm">
+                <div className="bg-secondary p-4 rounded-2xl mb-6 text-sm border border-border">
                   <p className="text-muted-foreground">
                     Add <span className="font-medium text-foreground">${(50 - cartTotal).toFixed(2)}</span> more to get free shipping
                   </p>
@@ -154,7 +153,7 @@ export function Cart() {
 
               <Link
                 to="/checkout"
-                className="block w-full bg-foreground text-background text-center px-8 py-4 rounded-full hover:bg-foreground/90 transition-all mb-4"
+                className="block w-full bg-primary text-primary-foreground text-center px-8 py-4 rounded-full hover:opacity-90 transition-opacity mb-4"
               >
                 Proceed to Checkout
               </Link>

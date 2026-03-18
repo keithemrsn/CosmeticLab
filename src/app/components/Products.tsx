@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 import { motion } from 'motion/react';
-import { Star, SlidersHorizontal } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { products, categories } from '../data/products';
 
 export function Products() {
@@ -27,128 +27,113 @@ export function Products() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="bg-secondary border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section className="relative overflow-hidden border-b border-border">
+        <div className="absolute right-[-5rem] top-[-5rem] h-56 w-56 rounded-full bg-[#d8bda8]/30 blur-3xl" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-4"
-            style={{ fontSize: '3rem' }}
+            className="mb-4 text-5xl md:text-6xl"
           >
-            All Products
+            Curated Makeup
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-muted-foreground"
+            className="text-muted-foreground max-w-2xl"
           >
-            Discover our complete collection of premium beauty products
+            Discover lightweight essentials, skin-loving formulas, and polished finishes for every routine.
           </motion.p>
         </div>
-      </div>
+      </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col md:flex-row gap-8">
-          <aside className="md:w-64 flex-shrink-0">
-            <div className="bg-white border border-border rounded-2xl p-6 sticky top-24">
-              <div className="flex items-center gap-2 mb-4">
-                <SlidersHorizontal className="w-4 h-4" />
-                <h3>Filters</h3>
-              </div>
-
-              <div className="space-y-6">
-                <div>
-                  <h4 className="text-sm mb-3">Category</h4>
-                  <div className="space-y-2">
-                    {categories.map((category) => (
-                      <button
-                        key={category}
-                        onClick={() => setSelectedCategory(category)}
-                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-                          selectedCategory === category
-                            ? 'bg-foreground text-background'
-                            : 'hover:bg-accent'
-                        }`}
-                      >
-                        {category}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="text-sm mb-3">Sort By</h4>
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                    className="w-full px-3 py-2 bg-input-background rounded-lg text-sm border border-border"
-                  >
-                    <option value="featured">Featured</option>
-                    <option value="price-low">Price: Low to High</option>
-                    <option value="price-high">Price: High to Low</option>
-                    <option value="rating">Highest Rated</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </aside>
-
-          <div className="flex-1">
-            <div className="mb-6 flex items-center justify-between">
-              <p className="text-sm text-muted-foreground">
-                {sortedProducts.length} {sortedProducts.length === 1 ? 'product' : 'products'}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {sortedProducts.map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="rounded-3xl border border-border bg-white/75 backdrop-blur p-4 md:p-5"
+        >
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="flex flex-wrap gap-2 md:gap-3">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`rounded-full px-4 py-2 text-sm tracking-wide transition-colors ${
+                    selectedCategory === category
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-white border border-border hover:bg-accent'
+                  }`}
                 >
-                  <Link
-                    to={`/products/${product.id}`}
-                    className="group block bg-white rounded-2xl overflow-hidden border border-border hover:shadow-lg transition-all duration-300"
-                  >
-                    <div className="relative aspect-square overflow-hidden bg-secondary">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      {product.bestseller && (
-                        <div className="absolute top-3 right-3 bg-foreground text-background px-3 py-1 rounded-full text-xs flex items-center gap-1">
-                          <Star className="w-3 h-3 fill-current" />
-                          Bestseller
-                        </div>
-                      )}
-                      {product.new && (
-                        <div className="absolute top-3 right-3 bg-foreground text-background px-3 py-1 rounded-full text-xs">
-                          New
-                        </div>
-                      )}
-                    </div>
-                    <div className="p-4">
-                      <p className="text-xs text-muted-foreground mb-1">{product.brand}</p>
-                      <h3 className="mb-2">{product.name}</h3>
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium">${product.price.toFixed(2)}</span>
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <Star className="w-3 h-3 fill-current" />
-                          {product.rating} ({product.reviews})
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
+                  {category}
+                </button>
               ))}
             </div>
+            <div className="flex items-center gap-3">
+              <p className="text-sm text-muted-foreground whitespace-nowrap">
+                {sortedProducts.length} {sortedProducts.length === 1 ? 'item' : 'items'}
+              </p>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="px-3 py-2 bg-input-background rounded-full text-sm border border-border"
+              >
+                <option value="featured">Featured</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="rating">Highest Rated</option>
+              </select>
+            </div>
           </div>
+        </motion.div>
+
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {sortedProducts.map((product, index) => (
+            <motion.div
+              key={product.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.04 }}
+            >
+              <Link
+                to={`/products/${product.id}`}
+                className="group block bg-white rounded-[1.75rem] overflow-hidden border border-border/80 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+              >
+                <div className="relative aspect-[4/5] overflow-hidden bg-secondary">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                  />
+                  {product.bestseller && (
+                    <div className="absolute top-3 right-3 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs flex items-center gap-1">
+                      <Star className="w-3 h-3 fill-current" />
+                      Bestseller
+                    </div>
+                  )}
+                  {!product.bestseller && product.new && (
+                    <div className="absolute top-3 right-3 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs">
+                      New
+                    </div>
+                  )}
+                </div>
+                <div className="p-5">
+                  <p className="ui-kicker mb-1">{product.brand}</p>
+                  <h3 className="mb-2 text-base line-clamp-1">{product.name}</h3>
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium">${product.price.toFixed(2)}</span>
+                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <Star className="w-3 h-3 fill-current" />
+                      {product.rating} ({product.reviews})
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
         </div>
-      </div>
+      </section>
     </div>
   );
 }

@@ -24,14 +24,17 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center py-12 px-4">
+    <div className="relative min-h-screen bg-background flex items-center justify-center py-12 px-4 overflow-hidden">
+      <div className="absolute left-[-5rem] top-[-4rem] h-64 w-64 rounded-full bg-[#d6bcaa]/35 blur-3xl" />
+      <div className="absolute right-[-4rem] bottom-[-5rem] h-72 w-72 rounded-full bg-[#caa487]/25 blur-3xl" />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md"
+        className="w-full max-w-md relative"
       >
         <div className="text-center mb-8">
-          <h1 className="mb-4" style={{ fontSize: '2.5rem' }}>
+          <p className="ui-kicker mb-3">Member Access</p>
+          <h1 className="mb-4 text-4xl md:text-5xl">
             Welcome Back
           </h1>
           <p className="text-muted-foreground">
@@ -39,7 +42,7 @@ export function Login() {
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl p-8 border border-border">
+        <div className="bg-white/92 rounded-3xl p-8 border border-border/80 backdrop-blur">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm mb-2">
@@ -51,7 +54,7 @@ export function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 bg-input-background rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-foreground/20"
+                className="w-full px-4 py-3 bg-input-background rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-foreground/20"
                 placeholder="you@example.com"
               />
             </div>
@@ -66,7 +69,7 @@ export function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-3 bg-input-background rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-foreground/20"
+                className="w-full px-4 py-3 bg-input-background rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-foreground/20"
                 placeholder="Enter your password"
               />
             </div>
@@ -85,7 +88,7 @@ export function Login() {
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={loading}
-              className="w-full bg-foreground text-background px-8 py-4 rounded-full hover:bg-foreground/90 transition-all disabled:opacity-50"
+              className="w-full bg-primary text-primary-foreground px-8 py-4 rounded-full hover:opacity-90 transition-opacity disabled:opacity-50"
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </motion.button>

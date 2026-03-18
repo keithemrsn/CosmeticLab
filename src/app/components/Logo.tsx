@@ -12,23 +12,23 @@ export function Logo({ className = '' }: { className?: string }) {
         whileHover={{ rotate: 360 }}
         transition={{ duration: 0.6 }}
       >
-        <circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="2" />
+        <circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="1.6" />
         <circle cx="16" cy="12" r="4" fill="currentColor" />
         <path
           d="M10 20 Q16 24 22 20"
           stroke="currentColor"
-          strokeWidth="2"
+          strokeWidth="1.6"
           strokeLinecap="round"
           fill="none"
         />
         <path
           d="M12 16 L14 15 M18 15 L20 16"
           stroke="currentColor"
-          strokeWidth="1.5"
+          strokeWidth="1.3"
           strokeLinecap="round"
         />
       </motion.svg>
-      <span className="tracking-tight" style={{ letterSpacing: '0.05em' }}>
+      <span className="tracking-tight text-sm md:text-base" style={{ letterSpacing: '0.22em' }}>
         COSMETICLAB
       </span>
     </div>

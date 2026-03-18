@@ -1,10 +1,8 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { safeJsonParse } from '../lib/storage';
+import { loginWithEmail, logoutSession, signupWithEmail, type AuthUser } from '../services/authService';
 
-interface User {
-  id: number;
-  email: string;
-  name: string;
-}
+type User = AuthUser;
 
 interface AuthContextType {
   user: User | null;
@@ -18,33 +16,32 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(() => {
-    const saved = localStorage.getItem('user');
-    return saved ? JSON.parse(saved) : null;
+    const saved = localStorage.getItem('user_profile');
+    return safeJsonParse<User | null>(saved, null);
   });
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('user_profile', JSON.stringify(user));
     } else {
-      localStorage.removeItem('user');
+      localStorage.removeItem('user_profile');
     }
   }, [user]);
 
   const login = async (email: string, password: string) => {
-    // Frontend mock - replace with your backend API call
-    await new Promise(resolve => setTimeout(resolve, 500));
-    const mockUser = { id: 1, email, name: email.split('@')[0] };
-    setUser(mockUser);
+    const nextUser = await loginWithEmail(email, password);
+    setUser(nextUser);
   };
 
   const signup = async (email: string, password: string, name: string) => {
-    // Frontend mock - replace with your backend API call
-    await new Promise(resolve => setTimeout(resolve, 500));
-    const mockUser = { id: Date.now(), email, name };
-    setUser(mockUser);
+    const nextUser = await signupWithEmail(email, password, name);
+    setUser(nextUser);
   };
 
   const logout = () => {
+    void logoutSession().catch(() => {
+      // Local logout still succeeds even if backend session cleanup fails.
+    });
     setUser(null);
   };
 

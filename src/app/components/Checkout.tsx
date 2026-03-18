@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 import { motion } from 'motion/react';
 import { CreditCard, Lock } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import { createCheckoutSession } from '../services/checkoutService';
 
 export function Checkout() {
   const { cartItems, cartTotal, clearCart } = useCart();
@@ -23,8 +24,7 @@ export function Checkout() {
   });
 
   if (cartItems.length === 0) {
-    navigate('/cart');
-    return null;
+    return <Navigate to="/cart" replace />;
   }
 
   const shippingCost = cartTotal >= 50 ? 0 : 5;
@@ -35,11 +35,22 @@ export function Checkout() {
     e.preventDefault();
     setLoading(true);
 
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    try {
+      const session = await createCheckoutSession({
+        cartItems,
+        shippingAddress: formData,
+      });
 
-    clearCart();
-    navigate('/');
-    setLoading(false);
+      if (session.checkoutUrl) {
+        window.location.assign(session.checkoutUrl);
+        return;
+      }
+
+      clearCart();
+      navigate('/');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -55,17 +66,22 @@ export function Checkout() {
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-          style={{ fontSize: '3rem' }}
+          className="mb-8 text-5xl md:text-6xl"
         >
           Checkout
         </motion.h1>
 
+        {!isAuthenticated && (
+          <div className="mb-8 rounded-2xl border border-border bg-white/70 px-4 py-3 text-sm text-muted-foreground">
+            You are checking out as a guest. Sign in next time for faster checkout and order tracking.
+          </div>
+        )}
+
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             <form onSubmit={handleSubmit} className="space-y-8">
-              <div className="bg-white rounded-2xl p-6 border border-border">
-                <h2 className="mb-6">Contact Information</h2>
+              <div className="bg-white rounded-3xl p-6 border border-border/80">
+                <h2 className="ui-kicker mb-6">Contact Information</h2>
                 <div className="space-y-4">
                   <div>
                     <label htmlFor="email" className="block text-sm mb-2">
@@ -85,8 +101,8 @@ export function Checkout() {
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl p-6 border border-border">
-                <h2 className="mb-6">Shipping Address</h2>
+              <div className="bg-white rounded-3xl p-6 border border-border/80">
+                <h2 className="ui-kicker mb-6">Shipping Address</h2>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="firstName" className="block text-sm mb-2">
@@ -193,12 +209,12 @@ export function Checkout() {
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl p-6 border border-border">
+              <div className="bg-white rounded-3xl p-6 border border-border/80">
                 <div className="flex items-center gap-2 mb-6">
                   <CreditCard className="w-5 h-5" />
-                  <h2>Payment Method</h2>
+                  <h2 className="ui-kicker">Payment Method</h2>
                 </div>
-                <div className="bg-secondary p-6 rounded-xl border-2 border-dashed border-border">
+                <div className="bg-secondary p-6 rounded-2xl border border-border">
                   <div className="flex items-center gap-3 mb-2">
                     <Lock className="w-5 h-5 text-muted-foreground" />
                     <h3>Shopify Payment Integration</h3>
@@ -218,7 +234,7 @@ export function Checkout() {
                 whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={loading}
-                className="w-full bg-foreground text-background px-8 py-4 rounded-full hover:bg-foreground/90 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                className="w-full bg-primary text-primary-foreground px-8 py-4 rounded-full hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 <Lock className="w-5 h-5" />
                 {loading ? 'Processing...' : `Pay $${total.toFixed(2)}`}
@@ -227,13 +243,13 @@ export function Checkout() {
           </div>
 
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-2xl p-6 border border-border sticky top-24">
-              <h3 className="mb-6">Order Summary</h3>
+            <div className="bg-white rounded-3xl p-6 border border-border/80 sticky top-28">
+              <h3 className="ui-kicker mb-6">Order Summary</h3>
 
               <div className="space-y-4 mb-6 max-h-64 overflow-y-auto">
                 {cartItems.map((item) => (
                   <div key={`${item.id}-${item.shade}`} className="flex gap-3">
-                    <div className="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-secondary">
+                    <div className="w-16 h-16 flex-shrink-0 rounded-xl overflow-hidden bg-secondary">
                       <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">

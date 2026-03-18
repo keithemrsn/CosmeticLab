@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router';
+import { useParams, Link } from 'react-router';
 import { motion } from 'motion/react';
 import { Star, Heart, ShoppingBag, Check } from 'lucide-react';
 import { products } from '../data/products';
@@ -7,7 +7,6 @@ import { useCart } from '../context/CartContext';
 
 export function ProductDetail() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { addToCart } = useCart();
   const [selectedShade, setSelectedShade] = useState<string | undefined>();
   const [added, setAdded] = useState(false);
@@ -48,8 +47,8 @@ export function ProductDetail() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <nav className="mb-8 text-sm text-muted-foreground">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-12">
+        <nav className="mb-8 text-xs md:text-sm text-muted-foreground tracking-wide">
           <Link to="/" className="hover:text-foreground">Home</Link>
           <span className="mx-2">/</span>
           <Link to="/products" className="hover:text-foreground">Products</Link>
@@ -57,16 +56,17 @@ export function ProductDetail() {
           <span className="text-foreground">{product.name}</span>
         </nav>
 
-        <div className="grid md:grid-cols-2 gap-12 mb-20">
+        <div className="grid md:grid-cols-2 gap-10 lg:gap-14 mb-20">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="aspect-square rounded-2xl overflow-hidden bg-secondary"
+            className="relative"
           >
+            <div className="absolute -left-4 -top-4 h-full w-full rounded-[2rem] border border-border" />
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-full object-cover"
+              className="relative aspect-[4/5] w-full rounded-[2rem] object-cover bg-secondary"
             />
           </motion.div>
 
@@ -77,20 +77,20 @@ export function ProductDetail() {
           >
             <div className="flex items-center gap-2 mb-2">
               {product.bestseller && (
-                <span className="inline-flex items-center gap-1 bg-foreground text-background px-3 py-1 rounded-full text-xs">
+                <span className="inline-flex items-center gap-1 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs">
                   <Star className="w-3 h-3 fill-current" />
                   Bestseller
                 </span>
               )}
               {product.new && (
-                <span className="bg-foreground text-background px-3 py-1 rounded-full text-xs">
+                <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs">
                   New
                 </span>
               )}
             </div>
 
-            <p className="text-sm text-muted-foreground mb-2">{product.brand}</p>
-            <h1 className="mb-4" style={{ fontSize: '2.5rem' }}>
+            <p className="ui-kicker mb-2">{product.brand}</p>
+            <h1 className="mb-4 text-4xl md:text-5xl leading-tight">
               {product.name}
             </h1>
 
@@ -119,16 +119,16 @@ export function ProductDetail() {
 
             {product.shades && (
               <div className="mb-8">
-                <h3 className="mb-4">Select Shade</h3>
+                <h3 className="ui-kicker mb-4">Select Shade</h3>
                 <div className="grid grid-cols-2 gap-3">
                   {product.shades.map((shade) => (
                     <button
                       key={shade}
                       onClick={() => setSelectedShade(shade)}
-                      className={`px-4 py-3 rounded-lg border-2 transition-all text-sm ${
+                      className={`px-4 py-3 rounded-full border transition-all text-sm ${
                         selectedShade === shade
-                          ? 'border-foreground bg-foreground/5'
-                          : 'border-border hover:border-foreground/30'
+                          ? 'border-primary bg-primary text-primary-foreground'
+                          : 'border-border hover:border-foreground/30 bg-white'
                       }`}
                     >
                       {shade}
@@ -143,7 +143,7 @@ export function ProductDetail() {
                 whileTap={{ scale: 0.95 }}
                 onClick={handleAddToCart}
                 disabled={product.shades && !selectedShade}
-                className="flex-1 bg-foreground text-background px-8 py-4 rounded-full hover:bg-foreground/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="flex-1 bg-primary text-primary-foreground px-8 py-4 rounded-full hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {added ? (
                   <>
@@ -159,22 +159,22 @@ export function ProductDetail() {
               </motion.button>
               <motion.button
                 whileTap={{ scale: 0.95 }}
-                className="p-4 border-2 border-border rounded-full hover:border-foreground transition-colors"
+                className="p-4 border border-border rounded-full hover:bg-white transition-colors"
               >
                 <Heart className="w-6 h-6" />
               </motion.button>
             </div>
 
-            <div className="border-t border-border pt-8 space-y-4 text-sm">
-              <div className="flex justify-between">
+            <div className="border-t border-border pt-8 space-y-4 text-sm bg-white/60 rounded-2xl p-5">
+              <div className="flex justify-between gap-4">
                 <span className="text-muted-foreground">Free Shipping</span>
                 <span>On orders over $50</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between gap-4">
                 <span className="text-muted-foreground">Returns</span>
                 <span>30-day return policy</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between gap-4">
                 <span className="text-muted-foreground">Category</span>
                 <span>{product.category}</span>
               </div>
@@ -184,7 +184,7 @@ export function ProductDetail() {
 
         {relatedProducts.length > 0 && (
           <section>
-            <h2 className="mb-8" style={{ fontSize: '2rem' }}>
+            <h2 className="mb-8 text-3xl md:text-4xl">
               You May Also Like
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -192,17 +192,17 @@ export function ProductDetail() {
                 <Link
                   key={relatedProduct.id}
                   to={`/products/${relatedProduct.id}`}
-                  className="group block bg-white rounded-2xl overflow-hidden border border-border hover:shadow-lg transition-all duration-300"
+                  className="group block bg-white rounded-3xl overflow-hidden border border-border/80 hover:shadow-lg transition-all duration-300"
                 >
-                  <div className="relative aspect-square overflow-hidden bg-secondary">
+                  <div className="relative aspect-[4/5] overflow-hidden bg-secondary">
                     <img
                       src={relatedProduct.image}
                       alt={relatedProduct.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                     />
                   </div>
-                  <div className="p-4">
-                    <p className="text-xs text-muted-foreground mb-1">
+                  <div className="p-5">
+                    <p className="ui-kicker mb-1">
                       {relatedProduct.brand}
                     </p>
                     <h3 className="mb-2">{relatedProduct.name}</h3>
