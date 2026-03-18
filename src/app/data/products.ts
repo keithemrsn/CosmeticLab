@@ -1,0 +1,162 @@
+export interface Product {
+  id: number;
+  name: string;
+  brand: string;
+  price: number;
+  image: string;
+  category: string;
+  description: string;
+  rating: number;
+  reviews: number;
+  shades?: string[];
+  bestseller?: boolean;
+  new?: boolean;
+}
+
+export const products: Product[] = [
+  {
+    id: 1,
+    name: "Luminous Foundation",
+    brand: "Radiance Beauty",
+    price: 48.00,
+    image: "https://images.unsplash.com/photo-1631214524020-7e18db9a8f92?w=400&h=400&fit=crop",
+    category: "Face",
+    description: "A lightweight, buildable foundation that delivers natural-looking coverage with a luminous finish.",
+    rating: 4.5,
+    reviews: 1284,
+    shades: ["Porcelain", "Ivory", "Sand", "Tan", "Espresso"],
+    bestseller: true,
+  },
+  {
+    id: 2,
+    name: "Velvet Matte Lipstick",
+    brand: "Luxe Cosmetics",
+    price: 26.00,
+    image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400&h=400&fit=crop",
+    category: "Lips",
+    description: "Highly pigmented matte lipstick with a velvety smooth texture that lasts all day.",
+    rating: 4.8,
+    reviews: 2156,
+    shades: ["Ruby Red", "Rose Pink", "Nude Beige", "Berry", "Coral"],
+    bestseller: true,
+  },
+  {
+    id: 3,
+    name: "Luxury Eye Palette",
+    brand: "Glamour Studio",
+    price: 65.00,
+    image: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=400&h=400&fit=crop",
+    category: "Eyes",
+    description: "12 highly-pigmented shades in matte, shimmer, and metallic finishes for endless eye looks.",
+    rating: 4.7,
+    reviews: 856,
+    new: true,
+  },
+  {
+    id: 4,
+    name: "Hydrating Serum",
+    brand: "Pure Glow",
+    price: 72.00,
+    image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&h=400&fit=crop",
+    category: "Skincare",
+    description: "Intensive hydrating serum with hyaluronic acid and vitamins for plump, radiant skin.",
+    rating: 4.9,
+    reviews: 3421,
+    bestseller: true,
+  },
+  {
+    id: 5,
+    name: "Volume Mascara",
+    brand: "Lash Perfect",
+    price: 24.00,
+    image: "https://images.unsplash.com/photo-1631730486572-226d1f595b68?w=400&h=400&fit=crop",
+    category: "Eyes",
+    description: "Volumizing mascara that delivers dramatic length and fullness without clumping.",
+    rating: 4.6,
+    reviews: 1678,
+  },
+  {
+    id: 6,
+    name: "Cream Blush",
+    brand: "Radiance Beauty",
+    price: 32.00,
+    image: "https://images.unsplash.com/photo-1617897903246-719242758050?w=400&h=400&fit=crop",
+    category: "Face",
+    description: "Creamy, blendable blush that melts into skin for a natural, healthy flush.",
+    rating: 4.4,
+    reviews: 934,
+    shades: ["Peachy Keen", "Rose Glow", "Berry Blush", "Coral Dream"],
+  },
+  {
+    id: 7,
+    name: "Setting Spray",
+    brand: "All Day Wear",
+    price: 34.00,
+    image: "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=400&h=400&fit=crop",
+    category: "Face",
+    description: "Long-lasting setting spray that keeps makeup fresh and in place for up to 16 hours.",
+    rating: 4.7,
+    reviews: 2845,
+    bestseller: true,
+  },
+  {
+    id: 8,
+    name: "Brow Definer",
+    brand: "Arch Perfect",
+    price: 22.00,
+    image: "https://images.unsplash.com/photo-1598452963314-b09f397a5c48?w=400&h=400&fit=crop",
+    category: "Eyes",
+    description: "Ultra-fine brow pencil for precise, natural-looking hair-like strokes.",
+    rating: 4.5,
+    reviews: 1245,
+    shades: ["Soft Brown", "Medium Brown", "Dark Brown", "Black"],
+  },
+  {
+    id: 9,
+    name: "Highlighter Palette",
+    brand: "Glow Studio",
+    price: 45.00,
+    image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=400&fit=crop",
+    category: "Face",
+    description: "Four champagne-toned highlighters for a radiant, lit-from-within glow.",
+    rating: 4.8,
+    reviews: 1567,
+    new: true,
+  },
+  {
+    id: 10,
+    name: "Lip Gloss Set",
+    brand: "Luxe Cosmetics",
+    price: 38.00,
+    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=400&fit=crop",
+    category: "Lips",
+    description: "Set of 3 high-shine lip glosses with a non-sticky formula and delicious scent.",
+    rating: 4.3,
+    reviews: 892,
+  },
+  {
+    id: 11,
+    name: "Makeup Remover",
+    brand: "Pure Glow",
+    price: 28.00,
+    image: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400&h=400&fit=crop",
+    category: "Skincare",
+    description: "Gentle yet effective makeup remover that dissolves all makeup including waterproof formulas.",
+    rating: 4.6,
+    reviews: 2134,
+  },
+  {
+    id: 12,
+    name: "Contour Stick",
+    brand: "Sculpt Pro",
+    price: 29.00,
+    image: "https://images.unsplash.com/photo-1583241800698-c7d1d18c0c66?w=400&h=400&fit=crop",
+    category: "Face",
+    description: "Cream contour stick for easy sculpting and definition with a natural finish.",
+    rating: 4.4,
+    reviews: 745,
+    shades: ["Light", "Medium", "Deep"],
+  },
+];
+
+export const categories = ["All", "Face", "Eyes", "Lips", "Skincare"];
